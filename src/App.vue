@@ -1,28 +1,58 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header
+    @sendData="getData"
+    />
+
+    <main>
+
+    <Movies
+    :importData="savedData"
+    />
+
+    </main>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Movies from './components/Movies.vue'
 
 export default {
   name: 'App',
+
   components: {
-    HelloWorld
+    Header,
+    Movies,
+  },
+
+  data(){
+    return {
+      savedData: [],
+    }
+  },
+
+  methods: {
+    getData(data){
+      this.savedData = data
+      console.log(this.savedData);
+    }
   }
 }
 </script>
 
 <style lang="scss">
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: grey;
+  height: 100vh;
 }
 </style>
