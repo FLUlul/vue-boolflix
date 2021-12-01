@@ -3,7 +3,7 @@
     <ul v-for="movie, i in importData" :key="i">
       <li>Title: {{movie.title}}</li>
       <li>Original Title: {{movie.original_title}}</li>
-      <li>Language: {{movie.original_language}}</li>
+      <li>Language: <img :src="require(`../assets/flags/${movie.original_language}.png`)" :alt="movie.original_language"> </li>
       <li>Vote: {{movie.vote_average}}</li>
     </ul>
   </section>
@@ -18,16 +18,6 @@ export default {
   props: {
     importData: Array,
   },
-
-  data() {
-    return {
-      
-    }
-  },
-
-  methods: {
-    
-  }
 }
 </script>
 
@@ -36,6 +26,7 @@ export default {
   section{
     display: flex;
     flex-wrap: wrap;
+    padding: 20px 0;
 
     ul{
       border: solid black 2px;
@@ -43,6 +34,7 @@ export default {
       margin: 5px 10px;
       list-style: none;
       color: white;
+      width: calc(100% / 4 - 20px);
     }
   }
 </style>

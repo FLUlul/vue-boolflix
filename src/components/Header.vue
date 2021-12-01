@@ -34,24 +34,29 @@ export default {
   methods: {
     requestAPI() {
       this.savedInp = this.inputSearch
-      
 
-      axios
-      .get (this.uri + this.apikey + this.apiquery + this.savedInp)
-      .then ((result) => {
+      if(this.savedInp !== ""){
+        axios
+        .get (this.uri + this.apikey + this.apiquery + this.savedInp)
+        .then ((result) => {
 
-        this.dataSearch = result.data.results
+          this.dataSearch = result.data.results
 
-        /* console.log(this.dataSearch, this.apiquery, this.savedInp); */
-        this.$emit('sendData', this.dataSearch)
+          /* console.log(this.dataSearch, this.apiquery, this.savedInp); */
+          this.$emit('sendData', this.dataSearch)
 
-        this.inputSearch = ""
-      })
-      .catch((error) => {
-      console.log(error);
-    })
+          this.inputSearch = ""
+          
+        })
+        .catch((error) => {
+        console.log(error);
+        })
+      }
     },
   },
+  computed: {
+
+  }
 }
 </script>
 

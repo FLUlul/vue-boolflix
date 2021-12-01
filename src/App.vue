@@ -54,5 +54,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   background-color: grey;
   height: 100vh;
+  overflow-y: scroll;
 }
 </style>
