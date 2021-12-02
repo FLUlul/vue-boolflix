@@ -29,19 +29,19 @@ export default {
       apikey: 'api_key=8e1d397aa3a246f7489f89325ede261e',
       apiquery: '&query=',
 
-      dataSearch: [],
+      dataMovieSearch: [],
+      dataTvSearch: [],
     }
   },
   methods: {
-    axiosCall(uri){
+    axiosCall(uri, dataArray, event){
       axios
       .get (uri + this.apikey + this.apiquery + this.savedInp)
       .then ((result) => {
 
-        this.dataSearch = result.data.results
+        dataArray = result.data.results
 
-        /* console.log(this.dataSearch, this.apiquery, this.savedInp); */
-        this.$emit('sendData', this.dataSearch)
+        this.$emit(event, dataArray)
 
         this.inputSearch = ""
         
@@ -55,9 +55,8 @@ export default {
       this.savedInp = this.inputSearch
 
       if(this.savedInp !== ""){
-        this.axiosCall(this.urimovie)
-
-        this.axiosCall(this.uritv)
+        this.axiosCall(this.urimovie, this.dataMovieSearch, "sendMovieData")
+        this.axiosCall(this.uritv, this.dataTvSearch, "sendTvData")
       }
     },
   },

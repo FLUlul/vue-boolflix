@@ -1,13 +1,15 @@
 <template>
   <div id="app">
     <Header
-    @sendData="getData"
+    @sendMovieData="getMovieData"
+    @sendTvData="getTvData"
     />
 
     <main>
 
     <Movies
-    :importData="savedData"
+    :importMovieData="savedMovieData"
+    :importTvData="savedTvData"
     />
 
     </main>
@@ -29,14 +31,19 @@ export default {
 
   data(){
     return {
-      savedData: [],
+      savedMovieData: [],
+      savedTvData: [],
     }
   },
 
   methods: {
-    getData(data){
-      this.savedData = data
-      console.log(this.savedData);
+    getMovieData(data){
+      this.savedMovieData = data
+      console.log("array movie:", this.savedMovieData);
+    },
+    getTvData(data){
+      this.savedTvData = data
+      console.log("array tv:", this.savedTvData);
     }
   }
 }

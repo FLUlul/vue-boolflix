@@ -1,6 +1,7 @@
 <template>
   <section>
-    <div class="card" v-for="movie, i in importData" :key="i">
+    <!-- cards movies -->
+    <div class="card movie" v-for="movie, i in importMovieData" :key="i">
       
       <div>
         <img src="https://www.uilmtorino.it/wp-content/themes/consultix/images/no-image-found-360x260.png" alt="no image" v-if="movie.backdrop_path === null">
@@ -8,13 +9,33 @@
       </div>
       
       <ul>
-        <li><span>Title: </span>{{movie.title || movie.name}}</li>
-        <li><span>Original Title: </span>{{movie.original_title || movie.original_name}}</li>
+        <li><span>Title: </span>{{movie.title}}</li>
+        <li><span>Original Title: </span>{{movie.original_title}}</li>
         <li><span>Language: </span><img :src="require(`../assets/flags/${movie.original_language}.png`)" :alt="movie.original_language"></li>
         <li><span>Vote: </span>{{movie.vote_average}}</li>
         <li><span>Overview: </span> {{movie.overview}}</li>
       </ul>
 
+      <div class="tag">Movie</div>
+    </div>
+
+    <!-- cards tv shows -->
+    <div class="card tv" v-for="tv, i in importTvData" :key="'A'+ i">
+      
+      <div>
+        <img src="https://www.uilmtorino.it/wp-content/themes/consultix/images/no-image-found-360x260.png" alt="no image" v-if="tv.backdrop_path === null">
+        <img :src="`https://image.tmdb.org/t/p/w342/${tv.backdrop_path}`" :alt="tv.title" v-else>
+      </div>
+      
+      <ul>
+        <li><span>Title: </span>{{tv.name}}</li>
+        <li><span>Original Title: </span>{{tv.original_name}}</li>
+        <li><span>Language: </span><img :src="require(`../assets/flags/${tv.original_language}.png`)" :alt="tv.original_language"></li>
+        <li><span>Vote: </span>{{tv.vote_average}}</li>
+        <li><span>Overview: </span> {{tv.overview}}</li>
+      </ul>
+
+      <div class="tag">Series</div>
     </div>
   </section>
 </template>
@@ -23,17 +44,9 @@
 export default {
   name: 'Movies',
 
-  data() {
-    return {
-      
-    }
-  },
-
   props: {
-    importData: Array,
-  },
-  methods: {
-
+    importMovieData: Array,
+    importTvData: Array,
   },
 }
 </script>
@@ -54,6 +67,15 @@ export default {
       background-color: black;
       border: solid white 2px;
       position: relative;
+
+      .tag{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: black;
+        padding: 1px 2px;
+        border-radius: 5px;
+      }
 
       div {
         max-height: 178.52px;
