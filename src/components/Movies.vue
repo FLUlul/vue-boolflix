@@ -12,7 +12,7 @@
         <li><span>Title: </span>{{movie.title}}</li>
         <li><span>Original Title: </span>{{movie.original_title}}</li>
         <li><span>Language: </span><img :src="require(`../assets/flags/${changeFlag(movie.original_language)}.png`)" :alt="movie.original_language"></li>
-        <li><span>Vote: </span>{{movie.vote_average}}</li>
+        <li><span>Vote: </span>{{transformVote(movie.vote_average)}} <span><i class="fas fa-star"></i></span></li>
         <li><span>Overview: </span> {{movie.overview}}</li>
       </ul>
 
@@ -31,7 +31,7 @@
         <li><span>Title: </span>{{tv.name}}</li>
         <li><span>Original Title: </span>{{tv.original_name}}</li>
         <li><span>Language: </span><img :src="require(`../assets/flags/${changeFlag(tv.original_language)}.png`)" :alt="tv.original_language"></li>
-        <li><span>Vote: </span>{{tv.vote_average}}</li>
+        <li><span>Vote: </span>{{transformVote(tv.vote_average)}} <span><i class="fas fa-star"></i></span></li>
         <li><span>Overview: </span> {{tv.overview}}</li>
       </ul>
 
@@ -49,6 +49,12 @@ export default {
     importTvData: Array,
   },
 
+  data(){
+    return {
+      newVote: 0,
+    }
+  },
+
   methods: {
     changeFlag(flag){
       if(flag == 'it'){
@@ -58,17 +64,23 @@ export default {
       }else{
         return "eu"
       }
+    },
+
+    transformVote(vote){
+      return parseInt(Math.round(this.newVote = vote / 2))
     }
   }
-  
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  @import '~@fortawesome/fontawesome-free/css/all.min.css';
+
   section{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     padding: 20px 0;
 
     .card{
