@@ -11,7 +11,7 @@
       <ul>
         <li><span>Title: </span>{{movie.title}}</li>
         <li><span>Original Title: </span>{{movie.original_title}}</li>
-        <li><span>Language: </span><img :src="require(`../assets/flags/${movie.original_language}.png`)" :alt="movie.original_language"></li>
+        <li><span>Language: </span><img :src="require(`../assets/flags/${changeFlag(movie.original_language)}.png`)" :alt="movie.original_language"></li>
         <li><span>Vote: </span>{{movie.vote_average}}</li>
         <li><span>Overview: </span> {{movie.overview}}</li>
       </ul>
@@ -30,7 +30,7 @@
       <ul>
         <li><span>Title: </span>{{tv.name}}</li>
         <li><span>Original Title: </span>{{tv.original_name}}</li>
-        <li><span>Language: </span><img :src="require(`../assets/flags/${tv.original_language}.png`)" :alt="tv.original_language"></li>
+        <li><span>Language: </span><img :src="require(`../assets/flags/${changeFlag(tv.original_language)}.png`)" :alt="tv.original_language"></li>
         <li><span>Vote: </span>{{tv.vote_average}}</li>
         <li><span>Overview: </span> {{tv.overview}}</li>
       </ul>
@@ -48,6 +48,19 @@ export default {
     importMovieData: Array,
     importTvData: Array,
   },
+
+  methods: {
+    changeFlag(flag){
+      if(flag == 'it'){
+        return "it"
+      }else if(flag == 'en'){
+        return "en"
+      }else{
+        return "eu"
+      }
+    }
+  }
+  
 }
 </script>
 
