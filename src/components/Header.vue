@@ -6,79 +6,33 @@
     </div>
 
     <nav>
-      <input type="text" v-model.trim="inputSearch" @keydown.enter="requestAPI">
+      <input type="text" v-model.trim="inputUser" @keydown.enter="saveInput">
 
-      <button @click.prevent="requestAPI">Search</button>
+      <button @click.prevent="saveInput">Search</button>
     </nav>
 
   </header>
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'Header',
 
-  props:{
-    importCastId: Number
-  },
-
   data(){
     return {
-      inputSearch: "",
-      savedInp: "",
-
-      urimovie: 'https://api.themoviedb.org/3/search/movie',
-      uritv: 'https://api.themoviedb.org/3/search/tv',
-      apicredits: `'/${this.importCastId}/credits'`,
-      apikey: '?api_key=8e1d397aa3a246f7489f89325ede261e',
-      apiquery: '&query=',
-
-      dataMovieSearch: [],
-      dataTvSearch: [],
-      dataCastSearch: [],
+      inputUser: "",
+      inputSaved: "",
     }
   },
+
   methods: {
-    axiosCall(uri, dataArray, event){
-      axios
-      .get (uri + this.apikey + this.apiquery + this.savedInp)
-      .then ((result) => {
-
-        dataArray = result.data.results
-
-        this.$emit(event, dataArray)
-
-        this.inputSearch = ""
-        
-      })
-      .catch((error) => {
-      console.log(error);
-      })
-    },
-
-    axiosCallCast(uri) {
-      axios
-      .get(uri + this.apicredits + this.apikey)
-      .then((result) => {
-        this.dataCastSearch = result.data.cast
-      })
-      .catch((error) => {
-      console.log(error);
-      })
-    },
-
-    requestAPI() {
-      this.savedInp = this.inputSearch
-
-      if(this.savedInp !== ""){
-        this.axiosCall(this.urimovie, this.dataMovieSearch, "sendMovieData")
-        this.axiosCall(this.uritv, this.dataTvSearch, "sendTvData")
-        this.axiosCallCast(this.urimovie)
-      }
-    },
-  },
+    saveInput(){
+      this.inputSaved = this.inputUser
+      this.$emit('sendInput', this.inputSaved)
+      this.inputUser = ""
+    }
+  }
 }
 </script>
 

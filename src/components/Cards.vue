@@ -3,7 +3,7 @@
 
     <div class="card" v-for="object, i in DataArray" :key="i">
       
-      <div>
+      <div class="poster">
         <img src="https://hesolutions.com.pk/wp-content/uploads/2019/01/picture-not-available.jpg" alt="no image" v-if="object.poster_path === null">
         <img :src="`https://image.tmdb.org/t/p/w342/${object.poster_path}`" :alt="object.title" v-else>
       </div>
