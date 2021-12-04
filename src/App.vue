@@ -3,6 +3,7 @@
     <Header
     @sendMovieData="getMovieData"
     @sendTvData="getTvData"
+    :importCastId="savedId"
     />
 
     <main>
@@ -10,6 +11,7 @@
     <Movies
     :importMovieData="savedMovieData"
     :importTvData="savedTvData"
+    @sendCastId="getCastId"
     />
 
     </main>
@@ -33,6 +35,7 @@ export default {
     return {
       savedMovieData: [],
       savedTvData: [],
+      savedId: 0,
     }
   },
 
@@ -44,6 +47,10 @@ export default {
     getTvData(data){
       this.savedTvData = data
       console.log("array tv:", this.savedTvData);
+    },
+    getCastId(id){
+      this.savedId = id
+      console.log("saved id", this.savedId);
     }
   }
 }

@@ -19,18 +19,25 @@ import axios from 'axios'
 
 export default {
   name: 'Header',
+
+  props:{
+    importCastId: Number
+  },
+
   data(){
     return {
       inputSearch: "",
       savedInp: "",
 
-      urimovie: 'https://api.themoviedb.org/3/search/movie?',
-      uritv: 'https://api.themoviedb.org/3/search/tv?',
-      apikey: 'api_key=8e1d397aa3a246f7489f89325ede261e',
+      urimovie: 'https://api.themoviedb.org/3/search/movie',
+      uritv: 'https://api.themoviedb.org/3/search/tv',
+      apicredits: `'/${this.importCastId}/credits'`,
+      apikey: '?api_key=8e1d397aa3a246f7489f89325ede261e',
       apiquery: '&query=',
 
       dataMovieSearch: [],
       dataTvSearch: [],
+      dataCastSearch: [],
     }
   },
   methods: {
@@ -51,12 +58,24 @@ export default {
       })
     },
 
+    axiosCallCast(uri) {
+      axios
+      .get(uri + this.apicredits + this.apikey)
+      .then((result) => {
+        this.dataCastSearch = result.data.cast
+      })
+      .catch((error) => {
+      console.log(error);
+      })
+    },
+
     requestAPI() {
       this.savedInp = this.inputSearch
 
       if(this.savedInp !== ""){
         this.axiosCall(this.urimovie, this.dataMovieSearch, "sendMovieData")
         this.axiosCall(this.uritv, this.dataTvSearch, "sendTvData")
+        this.axiosCallCast(this.urimovie)
       }
     },
   },
