@@ -3,15 +3,13 @@
 
     <Cards
     :dataArray="movieData"
-    :castArray="castMovieData"
     :Type="'Movie'"
     />
 
-<!--     <Cards
+    <Cards
     :dataArray="tvData"
-    :castArray="castMovieData"
     :Type="'Series'"
-    /> -->
+    />
 
   </section>
 </template>
@@ -41,17 +39,11 @@ export default {
 
       movieData: [],
       tvData: [],
-      castMovieData: [],
-
-      savedIDArr: [],
     }
   },
   /* "watch" works when "somethingToWatch" change do {that} */
   watch: {
     importInput(){
-
-      this.savedIDArr = []
-      this.castMovieData = []
 
       if (this.importInput !== '') {
         /* axios movies call */
@@ -59,19 +51,18 @@ export default {
         .get (this.urimovie + this.apikey + this.apiquery + this.importInput)
         .then ((result) => {
           this.movieData = result.data.results
-          console.log(this.movieData);
-
-          this.movieData.forEach((element, index) => {
-            this.savedIDArr.push(element.id)
-            console.log(this.savedIDArr);
+          
+          this.movieData.forEach((element) => {
             axios
-            .get ('https://api.themoviedb.org/3/movie/' + this.savedIDArr[index] + '/credits' + this.apikey)
+            .get ('https://api.themoviedb.org/3/movie/' + element.id + '/credits' + this.apikey)
             .then ((result) => {
+
               if (result.data.cast.length > 5) {
                 result.data.cast.length = 5
               }
-              this.castMovieData.push(result.data.cast)
-              console.log('cast-array:', this.castMovieData);
+              //the array cast is created inside the object movie
+              //element.cast = result.data.cast;
+              this.$set(element, 'cast', result.data.cast)
             })
             .catch((error) => {
             console.log(error);
@@ -83,14 +74,31 @@ export default {
         })
         
         /* axios tv series call */
-        /* axios
+        axios
         .get (this.uritv + this.apikey + this.apiquery + this.importInput)
         .then ((result) => {
           this.tvData = result.data.results
+
+          this.tvData.forEach((element) => {
+            axios
+            .get ('https://api.themoviedb.org/3/tv/' + element.id + '/credits' + this.apikey)
+            .then ((result) => {
+
+              if (result.data.cast.length > 5) {
+                result.data.cast.length = 5
+              }
+              //the array cast is inserted inside the object movie, creating a brand new key 'cast'
+              //element.cast = result.data.cast;
+              this.$set(element, 'cast', result.data.cast)
+            })
+            .catch((error) => {
+            console.log(error);
+            })
+          })
         })
         .catch((error) => {
         console.log(error);
-        }) */
+        })
 
       } 
     },

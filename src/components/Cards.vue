@@ -28,14 +28,18 @@
         <!-- overview -->
         <li><span>Overview: </span> {{object.overview}}</li>
         <!-- cast -->
-        <li>{{object.id}}</li>
-        <li class="actor" v-for="actor, j in castArray[i]" :key="j">
+        <li><span>Cast: </span></li>
+        <li class="actors">
 
-          <span>Cast: </span> {{actor.name}} {{i}}
+          <div v-for="actor, j in object.cast" :key="j">
 
-          <span v-if="actor.profile_path === null">no photo</span>
+            <span v-if="actor.profile_path === null">no photo </span>
 
-          <img v-else :src="`https://image.tmdb.org/t/p/w45/${actor.profile_path}`" :alt="actor.name">
+            <img v-else :src="`https://image.tmdb.org/t/p/w45/${actor.profile_path}`" :alt="actor.name">
+
+            <span>{{actor.name}}</span>
+
+          </div>
 
         </li>
       </ul>
@@ -53,7 +57,6 @@ export default {
 
   props: {
     dataArray: Array,
-    castArray: Array,
     Type: String
   },
 
@@ -139,6 +142,23 @@ export default {
       z-index: 10;
       padding: 10px;
       overflow-y: auto;
+
+      li{
+        margin: 5px 0;
+      }
+
+      .actors{
+        display: flex;
+
+        div{
+          width: calc(100% / 5);
+          text-align: center;
+
+          span{
+            overflow-wrap: break-word;
+          }
+        }
+      }
   
       span {
         font-weight: 700;
