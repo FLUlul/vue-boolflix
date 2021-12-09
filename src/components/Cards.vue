@@ -1,37 +1,49 @@
 <template>
   <div id="cards">
 
-    <div class="card" v-for="object, i in DataArray" :key="i">
+    <div class="card" v-for="object, i in dataArray" :key="i">
       
       <div class="poster">
         <img src="https://hesolutions.com.pk/wp-content/uploads/2019/01/picture-not-available.jpg" alt="no image" v-if="object.poster_path === null">
-        <img :src="`https://image.tmdb.org/t/p/w342/${object.poster_path}`" :alt="object.title" v-else>
+        <img :src="`https://image.tmdb.org/t/p/w342/${object.poster_path}`" :alt="object.title || object.name" v-else>
       </div>
       
       <ul>
-        <li><span>Title: </span>{{object.title}}</li>
-        <li><span>Original Title: </span>{{object.original_title}}</li>
+        <!-- title -->
+        <li><span>Title: </span>{{object.title || object.name}}</li>
+        <!-- original title -->
+        <li><span>Original Title: </span>{{object.original_title || object.original_name}}</li>
+        <!-- language -->
         <li><span>Language: </span><img :src="require(`../assets/flags/${changeFlag(object.original_language)}.png`)" :alt="object.original_language"></li>
+        <!-- vote -->
         <li>
-
           <span>
             Vote: 
           </span>
-
-          <span v-for="star, index in voteArr" :key="'B' + index" >
-
+          <span v-for="star, index in voteArr" :key="'B' + index">
             <i v-if="transformVote(object.vote_average) > index" class="fas fa-star"></i>
             <i v-else class="far fa-star"></i>
-            
           </span>
+        </li>
+        <!-- overview -->
+        <li><span>Overview: </span> {{object.overview}}</li>
+        <!-- cast -->
+        <li>{{object.id}}</li>
+        <li class="actor" v-for="actor, j in castArray[i]" :key="j">
+
+          <span>Cast: </span> {{actor.name}} {{i}}
+
+          <span v-if="actor.profile_path === null">no photo</span>
+
+          <img v-else :src="`https://image.tmdb.org/t/p/w45/${actor.profile_path}`" :alt="actor.name">
 
         </li>
-        <li><span>Overview: </span> {{object.overview}}</li>
-        <li><span>Cast: </span>{{object.id}}</li>
       </ul>
 
       <div class="tag">{{Type}}</div>
     </div>
+
+    
   </div>
 </template>
 
@@ -40,7 +52,8 @@ export default {
   name: 'Cards',
 
   props: {
-    DataArray: Array,
+    dataArray: Array,
+    castArray: Array,
     Type: String
   },
 
@@ -48,6 +61,7 @@ export default {
     return {
       newVote: 0,
       voteArr: [1,2,3,4,5],
+      apikey: '?api_key=8e1d397aa3a246f7489f89325ede261e',
     }
   },
 
@@ -131,4 +145,5 @@ export default {
       }
     }
   }
+
 </style>

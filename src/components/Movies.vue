@@ -2,14 +2,16 @@
   <section>
 
     <Cards
-    :DataArray="importMovieData"
+    :dataArray="movieData"
+    :castArray="castMovieData"
     :Type="'Movie'"
     />
 
-    <Cards
-    :DataArray="importTvData"
+<!--     <Cards
+    :dataArray="tvData"
+    :castArray="castMovieData"
     :Type="'Series'"
-    />
+    /> -->
 
   </section>
 </template>
@@ -37,36 +39,62 @@ export default {
       apikey: '?api_key=8e1d397aa3a246f7489f89325ede261e',
       apiquery: '&query=',
 
-      importMovieData: [],
-      importTvData: [],
+      movieData: [],
+      tvData: [],
+      castMovieData: [],
+
+      savedIDArr: [],
     }
   },
   /* "watch" works when "somethingToWatch" change do {that} */
   watch: {
     importInput(){
 
+      this.savedIDArr = []
+      this.castMovieData = []
+
       if (this.importInput !== '') {
+        /* axios movies call */
         axios
         .get (this.urimovie + this.apikey + this.apiquery + this.importInput)
         .then ((result) => {
-          this.importMovieData = result.data.results
+          this.movieData = result.data.results
+          console.log(this.movieData);
+
+          this.movieData.forEach((element, index) => {
+            this.savedIDArr.push(element.id)
+            console.log(this.savedIDArr);
+            axios
+            .get ('https://api.themoviedb.org/3/movie/' + this.savedIDArr[index] + '/credits' + this.apikey)
+            .then ((result) => {
+              if (result.data.cast.length > 5) {
+                result.data.cast.length = 5
+              }
+              this.castMovieData.push(result.data.cast)
+              console.log('cast-array:', this.castMovieData);
+            })
+            .catch((error) => {
+            console.log(error);
+            })
+          })
         })
         .catch((error) => {
         console.log(error);
         })
-
-        axios
+        
+        /* axios tv series call */
+        /* axios
         .get (this.uritv + this.apikey + this.apiquery + this.importInput)
         .then ((result) => {
-          this.importTvData = result.data.results
+          this.tvData = result.data.results
         })
         .catch((error) => {
         console.log(error);
-        })
-      } 
-    }
-  },
+        }) */
 
+      } 
+    },
+  },
 }
 </script>
 
