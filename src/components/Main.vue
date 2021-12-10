@@ -7,6 +7,13 @@
     />
 
     <div id="cards">
+      
+      <Cards
+      v-for="object, i in topRatedMovies" :key="'top' + i"
+      :dataObject="object"
+      :Type="'Movie'"
+      />
+
       <Cards
       v-for="object, i in filteredMovieData" :key="'movie' + i"
       :dataObject="object"
@@ -53,25 +60,34 @@ export default {
       genreData: [],
       genreIds: [],
       selectValue: 'All',
+
+      topRatedMovies: [],
     }
   },
   created() {
+    /* axios call to get all movie genres */
     axios
     .get ('https://api.themoviedb.org/3/genre/movie/list' + this.apikey)
     .then ((result) => {
       this.genreData = result.data.genres
-      console.log(this.genreData);
 
       this.genreData.forEach(element => {
         this.genreIds.push(element.id)
-        console.log(this.genreIds);
       });
     })
     .catch((error) => {
     console.log(error);
     })
-    
-    return this.genreData
+
+    /* axios call to get the  */
+    axios
+    .get ('https://api.themoviedb.org/3/movie/top_rated' + this.apikey)
+    .then ((result) => {
+      this.topRatedMovies = result.data.results
+    })
+    .catch((error) => {
+    console.log(error);
+    })
   },
 
   computed: {
@@ -97,10 +113,6 @@ export default {
   methods: {
     saveSelectValue(selectValue){
       this.selectValue = selectValue
-      console.log(this.selectValue);
-
-/*       this.movieData.forEach((element) => {
-      }) */
     }
   },
 

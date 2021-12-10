@@ -2,7 +2,7 @@
   <header>
 
     <div>
-      <h1>BOOLFLIX</h1>
+      <img src="../assets/boolflix-logo.png" alt="boolflix-logo">
     </div>
 
     <nav>
@@ -45,8 +45,12 @@ export default {
     background-color: black;
     padding: 10px;
     
-    div{
-      color: red;
+    div {
+      width: 150px;
+      cursor: pointer;
+      img {
+        max-width: 100%;
+      }
     }
   }
 </style>
