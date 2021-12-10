@@ -1,6 +1,8 @@
 <template>
     <div id="filter">
 
+      <span>Genres: </span>
+
       <select name="genres-list" id="genres" v-model="genreValue" @change="$emit('changeIt', genreValue)">
         
         <option value="All">All</option>
@@ -31,5 +33,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+  #filter{
+    margin: 10px 5px;
+  }
+  span{
+    color: white;
+    font-weight: 700;
+  }
 </style>

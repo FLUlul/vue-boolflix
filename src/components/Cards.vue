@@ -117,7 +117,7 @@ export default {
     } 
     
     &:hover ul{
-      background-color: black;
+      background-color: rgba(0, 0, 0, 0.698);
       display: block;
     }
 
