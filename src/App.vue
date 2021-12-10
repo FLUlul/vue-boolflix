@@ -7,7 +7,7 @@
 
     <main>
 
-    <Movies
+    <Main
     :importInput="savedInput"
     />
 
@@ -18,14 +18,14 @@
 
 <script>
 import Header from './components/Header.vue'
-import Movies from './components/Movies.vue'
+import Main from './components/Main.vue'
 
 export default {
   name: 'App',
 
   components: {
     Header,
-    Movies,
+    Main,
   },
 
   data(){

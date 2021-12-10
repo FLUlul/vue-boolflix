@@ -1,52 +1,48 @@
 <template>
-  <div id="cards">
-
-    <div class="card" v-for="object, i in dataArray" :key="i">
-      
-      <div class="poster">
-        <img src="https://hesolutions.com.pk/wp-content/uploads/2019/01/picture-not-available.jpg" alt="no image" v-if="object.poster_path === null">
-        <img :src="`https://image.tmdb.org/t/p/w342/${object.poster_path}`" :alt="object.title || object.name" v-else>
-      </div>
-      
-      <ul>
-        <!-- title -->
-        <li><span>Title: </span>{{object.title || object.name}}</li>
-        <!-- original title -->
-        <li><span>Original Title: </span>{{object.original_title || object.original_name}}</li>
-        <!-- language -->
-        <li><span>Language: </span><img :src="require(`../assets/flags/${changeFlag(object.original_language)}.png`)" :alt="object.original_language"></li>
-        <!-- vote -->
-        <li>
-          <span>
-            Vote: 
-          </span>
-          <span v-for="star, index in voteArr" :key="'B' + index">
-            <i v-if="transformVote(object.vote_average) > index" class="fas fa-star"></i>
-            <i v-else class="far fa-star"></i>
-          </span>
-        </li>
-        <!-- overview -->
-        <li><span>Overview: </span> {{object.overview}}</li>
-        <!-- cast -->
-        <li><span>Cast: </span></li>
-        <li class="actors">
-
-          <div v-for="actor, j in object.cast" :key="j">
-
-            <span v-if="actor.profile_path === null">no photo </span>
-
-            <img v-else :src="`https://image.tmdb.org/t/p/w45/${actor.profile_path}`" :alt="actor.name">
-
-            <span>{{actor.name}}</span>
-
-          </div>
-
-        </li>
-      </ul>
-
-      <div class="tag">{{Type}}</div>
+  <div class="card-container">
+    
+    <div class="poster">
+      <img src="https://hesolutions.com.pk/wp-content/uploads/2019/01/picture-not-available.jpg" alt="no image" v-if="dataObject.poster_path === null">
+      <img :src="`https://image.tmdb.org/t/p/w342/${dataObject.poster_path}`" :alt="dataObject.title || dataObject.name" v-else>
     </div>
+    
+    <ul>
+      <!-- title -->
+      <li><span>Title: </span>{{dataObject.title || dataObject.name}}</li>
+      <!-- original title -->
+      <li><span>Original Title: </span>{{dataObject.original_title || dataObject.original_name}}</li>
+      <!-- language -->
+      <li><span>Language: </span><img :src="require(`../assets/flags/${changeFlag(dataObject.original_language)}.png`)" :alt="dataObject.original_language"></li>
+      <!-- vote -->
+      <li>
+        <span>
+          Vote: 
+        </span>
+        <span v-for="star, index in voteArr" :key="'B' + index">
+          <i v-if="transformVote(dataObject.vote_average) > index" class="fas fa-star"></i>
+          <i v-else class="far fa-star"></i>
+        </span>
+      </li>
+      <!-- overview -->
+      <li><span>Overview: </span> {{dataObject.overview}}</li>
+      <!-- cast -->
+      <li><span>Cast: </span></li>
+      <li class="actors">
 
+        <div v-for="actor, j in dataObject.cast" :key="j">
+
+          <span v-if="actor.profile_path === null"></span>
+
+          <img v-else :src="`https://image.tmdb.org/t/p/w45/${actor.profile_path}`" :alt="actor.name">
+
+          <span>{{actor.name}}</span>
+
+        </div>
+
+      </li>
+    </ul>
+
+    <div class="tag">{{Type}}</div>
     
   </div>
 </template>
@@ -56,7 +52,7 @@ export default {
   name: 'Cards',
 
   props: {
-    dataArray: Array,
+    dataObject: Object,
     Type: String
   },
 
@@ -91,14 +87,7 @@ export default {
 <style scoped lang="scss">
   @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
-  #cards{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px 0;  
-  }
-
-  .card{
+  .card-container{
     max-width: 342px;
     margin: 5px 10px;
     color: white;
