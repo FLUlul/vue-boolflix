@@ -92,7 +92,8 @@ export default {
     margin: 5px 10px;
     color: white;
     background-color: black;
-    border: solid white 2px;
+    border: solid white 1px;
+    border-radius: 5px;
     position: relative;
     overflow: hidden;
 

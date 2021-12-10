@@ -14,7 +14,7 @@
       />
 
       <Cards
-      v-for="object, i in tvData" :key="'tv' + i"
+      v-for="object, i in filteredTvData" :key="'tv' + i"
       :dataObject="object"
       :Type="'Series'"
       />
@@ -80,6 +80,15 @@ export default {
         return this.movieData
       } 
       return this.movieData.filter((item) => {
+        return item.genre_ids.includes(this.selectValue)
+      })
+    },
+
+    filteredTvData() {
+      if (this.selectValue === "All"){
+        return this.tvData
+      } 
+      return this.tvData.filter((item) => {
         return item.genre_ids.includes(this.selectValue)
       })
     }
@@ -167,8 +176,8 @@ export default {
 <style scoped lang="scss">
   #cards{
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    flex-wrap: wrap;
     padding: 20px 0;  
   }
 </style>
