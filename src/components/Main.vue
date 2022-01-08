@@ -6,13 +6,19 @@
     @changeIt="saveSelectValue"
     />
 
-    <div id="cards">
+    <div class="cards">
       
-      <Cards
-      v-for="object, i in topRatedMovies" :key="'top' + i"
-      :dataObject="object"
-      :Type="'Movie'"
-      />
+      <div v-if="importInput === ''">
+        <h2 class="title-top">Top Rated Movies</h2>
+        <div class="cards">
+          <Cards
+          v-for="object, i in topRatedMovies" :key="'top' + i"
+          :dataObject="object"
+          :Type="'Movie'"
+          />
+        </div>
+      </div>
+      
 
       <Cards
       v-for="object, i in filteredMovieData" :key="'movie' + i"
@@ -79,7 +85,7 @@ export default {
     console.log(error);
     })
 
-    /* axios call to get the  */
+    /* axios call to get the top rated movies*/
     axios
     .get ('https://api.themoviedb.org/3/movie/top_rated' + this.apikey)
     .then ((result) => {
@@ -186,10 +192,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  #cards{
+  .cards{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     padding: 20px 0;  
+  }
+  .title-top {
+    text-align: center;
+    color: red;
   }
 </style>
